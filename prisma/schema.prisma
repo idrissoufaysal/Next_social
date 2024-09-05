@@ -48,7 +48,7 @@ model File{
 
 
 enum GenderType{
-  Male
   Female
+  Male
   Other
 }

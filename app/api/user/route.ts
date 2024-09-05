@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
@@ -13,15 +13,30 @@ export const GET = async () => {
   }
 };
 
-export const POST = async (req: NextApiRequest) => {
-  
-  try {
-    const user = await prisma.user.create({
-      data: JSON.parse(req.body),
-    });
-    
-    return new NextResponse(JSON.stringify(user), { status: 201 });
-  } catch (error: any) {
-    console.log(error.message);
-  }
-};
+// export const POST = async (req: NextApiRequest) => {
+
+//   try {
+//     const user = await prisma.user.create({
+//       data: JSON.parse(req.body),
+//     });
+
+//     return new NextResponse(JSON.stringify(user), { status: 201 });
+//   } catch (error: any) {
+//     console.log(error.message);
+//   }
+// };
+
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+
+  const newUser = await prisma.user.create({
+    data: {
+      ...body,
+    },
+  });
+  return NextResponse.json({
+    success: 1,
+    message: "create success",
+    user: newUser,
+  });
+}
