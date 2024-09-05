@@ -40,7 +40,7 @@ export const GET = async (
 
 export const PUT = async (
   req: NextRequest,
-  { params }: { params: { id: number } }
+  { params }: { params: { id: string } }
 ) => {
   const userId = params.id;
   if (!userId) {
@@ -57,7 +57,7 @@ export const PUT = async (
     }
 
     const existingUser = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: parseInt(userId) },
     });
     if (!existingUser) {
       return NextResponse.json(
