@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { ok } from "assert";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -78,7 +77,15 @@ export const PUT = async (
       { message: "mise a jour avec succes", newUser: updateUser },
       { status: 200 }
     );
-  } catch (error) {}
+  } catch (error:any) {
+    console.log(error.message);
+    return new NextResponse(
+      JSON.stringify({ message: "Error updating user api/user/:id" }),
+      {
+        status: 500,
+      }
+    );
+  }
 };
 
 //route pour la suppression d'un utilisateur
