@@ -7,7 +7,6 @@ export const GET = async (
   req: NextRequest,
   { params }: { params: { id: string } }
 ) => {
-  console.log("okk.......");
 
   const userId = params.id;
   if (!userId) {
@@ -80,7 +79,7 @@ export const PUT = async (
   } catch (error:any) {
     console.log(error.message);
     return new NextResponse(
-      JSON.stringify({ message: "Error updating user api/user/:id" }),
+      JSON.stringify({ message: "Error updating user (PUT) api/user/:id" }),
       {
         status: 500,
       }
